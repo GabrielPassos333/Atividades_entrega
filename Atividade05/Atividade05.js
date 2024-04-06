@@ -1,4 +1,4 @@
-const numbers = [10,2,3,4,50,20,21,-10,-4,666,0,90,80,88,72]//15 elementos média 72,8 soma 1092(utilizar para teste)
+//const numbers = [10,2,3,4,50,20,21,-10,-4,666,0,90,80,88,72]//15 elementos média 72,8 soma 1092(utilizar para teste)
 
 //Uma Função que devolve os valores que são maiores que a média
 function maiorMedia(lista){
