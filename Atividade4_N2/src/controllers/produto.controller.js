@@ -1,21 +1,28 @@
 import { validationResult } from 'express-validator';
 import Produto from '../models/produto.model.js';
 
-function validaCampos(){
-  const errors = validationResult(req) //Faz a validação dos campos
-    if(!errors.isEmpty()){
-      return res.status(400).json({ errors: errors.array() })
-    }
-}
+// function validaCampos(){
+//   const errors = validationResult(req) //Faz a validação dos campos
+//     if(!errors.isEmpty()){
+//       return res.status(400).json({ errors: errors.array() })
+//     }
+// }
 
 export default class ProdutoController{
   static async index(req, res){
-    const produtos = await Produto.findMany()
+    const produtos = await Produto.findMany({
+      include: {
+        fotos: true
+      }
+    })
     res.json(produtos)
   }
 
   static async create(req, res){
-    validaCampos();
+    const errors = validationResult(req) //Faz a validação dos campos
+    if(!errors.isEmpty()){
+      return res.status(400).json({ errors: errors.array() })
+    }
 
     const produto = await Produto.create({
       data: req.body
@@ -41,11 +48,17 @@ export default class ProdutoController{
   }
 
   static async update(req, res){
-    validaCampos();
+    const errors = validationResult(req) //Faz a validação dos campos
+    if(!errors.isEmpty()){
+      return res.status(400).json({ errors: errors.array() })
+    }
 
     const produto = await Produto.findUnique({
       where: {
         id: parseInt(req.params.id)
+      },
+      include:{
+        fotos: true
       }
     })
     if(!produto){
